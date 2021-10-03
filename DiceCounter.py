@@ -5,7 +5,7 @@ import numpy as np;
 BadAnswer = True
 
 # Read image
-im = cv2.imread("Images/dices4.jpg", cv2.IMREAD_GRAYSCALE)
+im = cv2.imread("Images/dices2.jpg", cv2.IMREAD_GRAYSCALE)
 imr = cv2.resize(im, (640, 480))
 (thresh, imbw) = cv2.threshold(im, 150, 255, cv2.THRESH_BINARY)
 
@@ -53,9 +53,15 @@ detector = cv2.SimpleBlobDetector_create(params)
 # Detect blobs.
 keypoints = detector.detect(imr)
 
+#Number of keypoints detected
+value = len(keypoints)
+
 # Draw detected blobs as red circles.
 # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
 im_with_keypoints = cv2.drawKeypoints(imr, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+#Put value on image 
+cv2.putText(im_with_keypoints,f"Value of the dices: {value} ", (10,30), cv2.FONT_HERSHEY_COMPLEX, 0.75, (0,0,255),2)
 
 # Show keypoints
 cv2.imshow("Keypoints", im_with_keypoints)
